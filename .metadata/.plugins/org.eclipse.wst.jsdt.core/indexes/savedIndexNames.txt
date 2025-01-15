@@ -1,7 +1,0 @@
-INDEX VERSION 1.4+C:\Users\alice\OneDrive\Área de Trabalho\portifolio sites\front-end\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-4112055764.index
-1721700282.index
-2093702133.index
-516275.index
-907068523.index
-3413287632.index

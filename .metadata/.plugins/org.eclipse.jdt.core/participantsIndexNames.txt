@@ -1,7 +1,0 @@
-INDEX VERSION 1.132
-C:\Users\alice\OneDrive\Área de Trabalho\portifolio sites\front-end\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1823855729.index
-\back-end\src\main\java
-C:\Users\alice\OneDrive\Área de Trabalho\portifolio sites\front-end\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1705315791.index
-\back-end\src\main\java
-C:\Users\alice\OneDrive\Área de Trabalho\portifolio sites\front-end\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2238510397.index
-\back-end\src\main\java
