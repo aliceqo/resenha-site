@@ -12,4 +12,5 @@ Tecnologias Utilizadas
 - Ambiente de Desenvolvimento: Eclipse e Visual Studio Code.
   
 Todas as fotos foram tiradas por mim, utilizando meus próprios livros. 
+
 Desenvolvido por Alice Queiroz como parte do portfólio.
