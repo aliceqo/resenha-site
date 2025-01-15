@@ -1,0 +1,6 @@
+INDEX VERSION 1.132+C:\Users\alice\OneDrive\Área de Trabalho\portifolio sites\front-end\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
+612422074.index
+516275.index
+568293649.index
+1225713970.index

@@ -1,0 +1,70 @@
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('JavaScript carregado e executando');
+  
+    const pageContainer = document.getElementById('page-container');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const searchForm = document.getElementById('searchForm');
+    const menuIcon = document.querySelector('.menu-icon');
+    const menuOptions = document.querySelector('.menu-options');
+
+//Navegação
+    const loadPage = (url) => {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                pageContainer.innerHTML = html;
+            })
+            .catch(error => console.error('Erro ao carregar a página:', error));
+    };
+
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const url = link.getAttribute('href');
+            loadPage(url);
+        });
+    });
+
+//Pesquisar resenha
+    searchInput.addEventListener('input', function() {
+        const query = searchInput.value;
+
+        if (query.length < 3) {
+            searchResults.innerHTML = ''; 
+            return;
+        }
+
+        fetch(`/back-end/pesquisarResenha?searchInput=${encodeURIComponent(query)}`)
+            .then(response => response.text())
+            .then(data => {
+                searchResults.innerHTML = data;
+            })
+            .catch(error => console.error('Erro:', error));
+    });
+
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        const searchQuery = searchInput.value;
+
+        if (searchQuery.length < 3) {
+            return;
+        }
+
+        window.location.href = `/back-end/pesquisarResenha?searchInput=${encodeURIComponent(searchQuery)}`;
+    });
+
+    if (menuIcon && menuOptions) {
+        menuIcon.addEventListener('click', () => {
+            menuOptions.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!menuOptions.contains(event.target) && event.target !== menuIcon) {
+                menuOptions.classList.remove('show');
+            }
+        });
+    }
+});
+

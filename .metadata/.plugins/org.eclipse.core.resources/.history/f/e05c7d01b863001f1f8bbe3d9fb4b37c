@@ -1,0 +1,57 @@
+document.addEventListener("DOMContentLoaded", function() {
+    // Seleciona os botões
+    const botAddResenha = document.getElementById("bot-add-resenha");
+    const botRasResenha = document.getElementById("bot-ras-resenha");
+
+    // Função para coletar os dados dos dois formulários
+    function coletarDadosFormulario() {
+        const formResenha = document.getElementById("form-add-resenha");
+        const formFrase = document.getElementById("resenha_frase");
+
+        // Cria um FormData combinando os dois formulários
+        const formData = new FormData(formResenha);
+        const formDataFrase = new FormData(formFrase);
+
+        // Adiciona os dados do segundo formulário ao FormData principal
+        for (let [key, value] of formDataFrase.entries()) {
+            formData.append(key, value);
+        }
+
+        return formData;
+    }
+
+    // Função para enviar o formulário
+    function enviarFormulario(url) {
+        const formData = coletarDadosFormulario();
+
+        fetch(url, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Erro ao enviar o formulário");
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log("Sucesso:", data);
+            window.location.href = "indexAdm.html"; // Redireciona após o envio bem-sucedido
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+        });
+    }
+
+    // Evento para o botão "Adicionar Resenha"
+    botAddResenha.addEventListener("click", function(event) {
+        event.preventDefault(); // Evita o comportamento padrão do botão
+        enviarFormulario("http://localhost:8080/back-end/adicionar"); // URL do seu Servlet
+    });
+
+    // Evento para o botão "Rascunho Resenha"
+    botRasResenha.addEventListener("click", function(event) {
+        event.preventDefault(); // Evita o comportamento padrão do botão
+        enviarFormulario("http://localhost:8080/back-end/adicionar"); // URL do seu Servlet
+    });
+});

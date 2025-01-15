@@ -1,0 +1,22 @@
+const form = document.getElementById("adicionar-resenha");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  fetch("/back-end/adicionar", {
+    method: "POST",
+    body: formData
+  })
+  .then(response => {
+    if (response.ok) {
+      window.location.href = "indexAdm.html";
+    } else {
+      console.error("Error sending request:", response.statusText);
+    }
+  })
+  .catch(error => {
+    console.error("Error sending request:", error);
+  });
+});

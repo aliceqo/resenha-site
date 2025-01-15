@@ -1,0 +1,47 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    if (id) {
+        fetch(`editarExcluir?id=${id}`)
+            .then(response => response.text())
+            .then(data => {
+                populateForms(data);
+            })
+            .catch(error => {
+                console.error('Erro ao carregar a resenha:', error);
+            });
+    }
+
+    document.getElementById('bot-editar-resenha').addEventListener('click', () => {
+        const formInfo = document.getElementById('form-info');
+        const formResenhaFrase = document.getElementById('form-resenha-frase');
+        formInfo.submit();
+        formResenhaFrase.submit();
+    });
+
+    document.getElementById('bot-excluir-resenha').addEventListener('click', () => {
+        const formInfo = document.getElementById('form-info');
+        formInfo.action = 'excluirResenha'; 
+        formInfo.submit();
+    });
+});
+
+function populateForms(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    document.getElementById('url_foto').value = doc.querySelector('#url_foto').textContent;
+    document.getElementById('titulo').value = doc.querySelector('#titulo').textContent;
+    document.getElementById('idade_leitura').value = doc.querySelector('#idade_leitura').textContent;
+    document.getElementById('livro').value = doc.querySelector('#livro').textContent;
+    document.getElementById('autor').value = doc.querySelector('#autor').textContent;
+    document.getElementById('tradutor').value = doc.querySelector('#tradutor').textContent;
+    document.getElementById('generos').value = doc.querySelector('#generos').textContent;
+    document.getElementById('idioma').value = doc.querySelector('#idioma').textContent;
+    document.getElementById('editora').value = doc.querySelector('#editora').textContent;
+    document.getElementById('numero_paginas').value = parseInt(doc.querySelector('#numero_paginas').textContent, 10);
+
+    document.getElementById('frase_destaque').value = doc.querySelector('#frase_destaque').textContent;
+    document.getElementById('resenha').value = doc.querySelector('#resenha').textContent;
+}

@@ -1,0 +1,135 @@
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('JavaScript carregado e executando');
+    const resenhaId = obterIdResenha();
+    if (resenhaId) {
+        console.log('ID da resenha:', resenhaId);
+        carregarDadosResenha(resenhaId);
+    } else {
+        console.error('ID da resenha não encontrado');
+    }
+});
+
+function carregarDadosResenha(id) {
+    fetch(`/back-end/excluirEditar?id=${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erro ao carregar os dados da resenha: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Dados da resenha:', data);
+
+            atualizarElemento('imagem_capa', data.url_foto, 'src');
+            atualizarElemento('titulo', data.titulo);
+            atualizarElemento('idade_leitura', data.idade_leitura);
+            atualizarElemento('livro', data.livro);
+            atualizarElemento('autor', data.autor);
+            atualizarElemento('tradutor', data.tradutor);
+            atualizarElemento('generos', data.generos);
+            atualizarElemento('idioma', data.idioma);
+            atualizarElemento('editora', data.editora);
+            
+            // Atualização específica para o campo numérico
+            atualizarElemento('numero_paginas', data.numero_paginas, 'value', true);
+            
+            atualizarElemento('frase_destaque', data.frase_destaque);
+            atualizarElemento('conteudo_resenha', data.conteudo_resenha, 'innerText');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os dados da resenha:', error);
+        });
+}
+
+function atualizarElemento(id, valor, atributo, forNumber) {
+    const elemento = document.getElementById(id);
+    if (elemento) {
+        if (atributo === 'src' && elemento.tagName === 'IMG') {
+            elemento.src = valor || 'Não disponível';
+        } else if (atributo === 'value' || !atributo) {
+            if (forNumber) {
+                elemento.valueAsNumber = valor; // Use valueAsNumber for numeric fields
+            } else {
+                elemento.value = valor || '';
+            }
+        } else if (atributo === 'innerText') {
+            elemento.innerText = valor || 'Não disponível';
+        }
+    } else {
+        console.error(`Elemento com ID ${id} não encontrado`);
+    }
+}
+
+function obterIdResenha() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id');
+}
+
+document.querySelector("#bot-editar-resenha").addEventListener("click", function (event) {
+    event.preventDefault();  // Evita o comportamento padrão do botão
+
+    const titulo = document.querySelector("#titulo").value;
+    const idade_leitura = document.querySelector("#idade_leitura").value;
+    const livro = document.querySelector("#livro").value;
+    const autor = document.querySelector("#autor").value;
+    const tradutor = document.querySelector("#tradutor").value;
+    const generos = document.querySelector("#generos").value;
+    const idioma = document.querySelector("#idioma").value;
+    const editora = document.querySelector("#editora").value;
+    const numero_paginas = document.querySelector("#numero_paginas").value;
+    const frase_destaque = document.querySelector("#frase_destaque").value;
+    const conteudo_resenha = document.querySelector("#conteudo_resenha").value;
+
+    // Criando um FormData para enviar os dados
+    const formData = new FormData();
+    formData.append("titulo", titulo);
+    formData.append("idade_leitura", idade_leitura);
+    formData.append("livro", livro);
+    formData.append("autor", autor);
+    formData.append("tradutor", tradutor);
+    formData.append("generos", generos);
+    formData.append("idioma", idioma);
+    formData.append("editora", editora);
+    formData.append("numero_paginas", numero_paginas);
+    formData.append("frase_destaque", frase_destaque);
+    formData.append("conteudo_resenha", conteudo_resenha);
+
+    // Enviando a requisição ao servidor para editar a resenha
+    fetch(`/back-end/excluirEditar?id=${id}`, {
+        method: "POST",  // Utilizando POST para editar
+        body: formData
+    }).then(response => {
+        if (response.ok) {
+            alert("Resenha editada com sucesso!");
+            // Aqui você pode atualizar a interface ou redirecionar, se necessário
+        } else {
+            alert("Erro ao editar a resenha.");
+        }
+    }).catch(error => {
+        console.error("Erro na requisição:", error);
+    });
+});
+
+
+
+function excluirResenha(id) {
+    if (confirm("Tem certeza que deseja excluir esta resenha?")) {
+        fetch(`/back-end/excluirEditar?id=${id}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.text(); // Processa a resposta como texto
+            } else {
+                throw new Error('Erro na requisição: ' + response.status);
+            }
+        })
+        .then(text => {
+            alert(text); // Exibe a mensagem recebida do servlet
+            // Redirecionar ou atualizar a página conforme necessário
+        })
+        .catch(error => {
+            console.error('Erro ao excluir a resenha:', error);
+        });
+    }
+}

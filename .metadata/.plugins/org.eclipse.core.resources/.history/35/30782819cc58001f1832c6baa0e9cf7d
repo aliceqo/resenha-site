@@ -1,0 +1,33 @@
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('JavaScript carregado e executando');
+  
+    const pageContainer = document.getElementById('page-container');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const searchForm = document.getElementById('searchForm');
+
+    // Navegação
+    const loadPage = (url) => {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                pageContainer.innerHTML = html;
+            })
+            .catch(error => console.error('Erro ao carregar a página:', error));
+    };
+
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const url = link.getAttribute('href');
+            loadPage(url);
+        });
+    });
+
+    // Pesquisar resenha
+    function pesquisar(){}
+    let input = document.getElementById('searchInput').value
+    input = input.toLowerCase()
+    let x = document.getElementsByClassName('resenhas')
+    
+});

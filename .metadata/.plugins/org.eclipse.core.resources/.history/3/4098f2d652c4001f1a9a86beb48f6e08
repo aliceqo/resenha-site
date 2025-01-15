@@ -1,0 +1,20 @@
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/back-end/pegarResenhas') // Use o endpoint para pegar todas as resenhas
+        .then(response => response.json())
+        .then(resenhas => {
+            const destaqueLivros = resenhas.slice(0, 4); // Exemplo: pegar os primeiros 4 livros para destaque
+            const container = document.querySelector('.livros');
+
+            destaqueLivros.forEach((resenha, index) => {
+                const livroDiv = document.getElementById(`livro-${index + 1}`);
+                if (livroDiv) {
+                    livroDiv.innerHTML = `
+                        <img src="${resenha.url_foto}" alt="${resenha.titulo}">
+                        <h3>${resenha.titulo}</h3>
+                        <a href="resenhas/${resenha.livro.toLowerCase().replace(/\s+/g, '-')}.html">Ver Resenha</a>
+                    `;
+                }
+            });
+        })
+        .catch(error => console.error('Erro ao carregar resenhas:', error));
+});

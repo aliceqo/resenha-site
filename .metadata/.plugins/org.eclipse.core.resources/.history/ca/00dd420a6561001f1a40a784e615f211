@@ -1,0 +1,319 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F4A460;
+}
+
+.page-content {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.page-content.hidden {
+    opacity: 0;
+}
+
+#resultado {
+    display: none; 
+    position: absolute;
+    justify-content: center;
+    background-color: #F4A460;
+    color:#FFFAFA;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 25px; 
+    margin-left: 95px;
+    margin-top: -12.5px;
+}  
+
+/*login*/
+
+.login {
+    background-color: #FFFAFA;
+    height: 400px;
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #FFFAFA;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: left; 
+    display: block;
+}
+
+.login h1 {
+    font-size: 35px;
+    margin-bottom: 40px;
+    color: #eb8c3a;
+    text-align: center;
+}
+
+.login label {
+    font-size: 18px;
+    margin-left: 35px;
+    display: block;
+    margin-bottom: 10px;
+    color: #363636;
+}
+
+.login input[type="text"],
+.login input[type="password"]{
+    background-color: #F4A460;
+    color: #FFFAFA; 
+    width: 80%;
+    margin-left: 35px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 15px;
+    text-align: left;
+}
+
+.login input[type="text"]::placeholder,
+.login input[type="password"]::placeholder {
+    color: #FFFAFA; 
+}    
+
+.login input[type="text"]:hover,
+.login input[type="password"]:hover {
+    background-color: #eb8c3a;
+}
+
+.login button {
+    width: 50%;
+    padding: 10px;
+    margin: 0 auto; 
+    margin-top: 30px;
+    display: block;
+    background-color: #F4A460;
+    color: #FFFAFA;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login button:hover {
+    background-color: #eb8c3a;
+}
+
+.login a {
+    display: block;
+    margin-top: 10px;
+    color: #eb8c3a;
+    text-decoration: none;
+    text-align: center;
+}
+
+/*esqueciSenha*/
+
+.esqueciSenha #resultado {
+    display: none; 
+    position: absolute;
+    justify-content: center;
+    background-color: #F4A460;
+    color:#FFFAFA;
+    border: 1px solid #ddd;
+    padding: 5px;
+    width: 12.8%;
+    border-radius: 25px; 
+    margin-left: 95px;
+    margin-top: 30px;
+}  
+
+.esqueciSenha {
+    background-color: #FFFAFA;
+    height: 400px;
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #FFFAFA;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: left; 
+    display: block;
+}
+
+.esqueciSenha h1 {
+    font-size: 35px;
+    margin-bottom: 40px;
+    color: #eb8c3a;
+    text-align: center;
+}
+
+.esqueciSenha label {
+    font-size: 18px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    margin-top: 80px;
+    display: block;
+    color: #363636;
+}
+
+.esqueciSenha input[type="text"] {
+    background-color: #F4A460;
+    color: #FFFAFA; 
+    width: 80%;
+    margin-left: 30px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 15px;
+    text-align: left;
+}
+
+.esqueciSenha input[type="text"]::placeholder {
+    color: #FFFAFA; 
+}    
+
+.esqueciSenha input[type="text"]:hover {
+    background-color: #eb8c3a;
+}
+
+.esqueciSenha button {
+    width: 50%;
+    padding: 10px;
+    margin: 0 auto; 
+    margin-top: 80px;
+    display: block;
+    background-color: #F4A460;
+    color: #FFFAFA;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.esqueciSenha button:hover {
+    background-color: #eb8c3a;
+}
+
+.esqueciSenha a {
+    display: block;
+    margin-top: 10px;
+    color: #eb8c3a;
+    text-decoration: none;
+    text-align: center;
+}
+
+/*redefinirSenha*/
+.redefinirSenha #resultado {
+    display: none; 
+    position: absolute;
+    justify-content: center;
+    background-color: #F4A460;
+    color:#FFFAFA;
+    border: 1px solid #ddd;
+    padding: 5px;
+    width: 200px;
+    border-radius: 25px; 
+    margin-left: 95px;
+    margin-top: 10px;
+}  
+
+.redefinirSenha {
+    background-color: #FFFAFA;
+    height: 400px;
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #FFFAFA;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: left; 
+    display: block;
+}
+
+.redefinirSenha h1 {
+    font-size: 35px;
+    margin-bottom: 40px;
+    color: #eb8c3a;
+    text-align: center;
+}
+
+.redefinirSenha label {
+    font-size: 18px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    display: block;
+    color: #363636;
+}
+
+.redefinirSenha input[type="password"] {
+    background-color: #F4A460;
+    color: #FFFAFA; 
+    width: 80%;
+    margin-left: 30px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 15px;
+    text-align: left;
+}
+
+.redefinirSenha input[type="password"]::placeholder {
+    color: #FFFAFA; 
+}    
+
+.redefinirSenha input[type="password"]:hover {
+    background-color: #eb8c3a;
+}
+
+.redefinirSenha button {
+    width: 50%;
+    padding: 10px;
+    margin: 0 auto; 
+    margin-top: 30px;
+    display: block;
+    background-color: #F4A460;
+    color: #FFFAFA;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.redefinirSenha button:hover {
+    background-color: #eb8c3a;
+}
+
+.redefinirSenha a {
+    display: block;
+    margin-top: 10px;
+    color: #eb8c3a;
+    text-decoration: none;
+    text-align: center;
+}
+
+/*Tela dividia do computador*/
+@media only screen and (min-width: 767px) and (max-width: 1024px) {
+    header {
+        background-image: url('../imagens/fundo/fundo2.png');
+        padding: 20px;
+    }
+    nav ul li {
+        margin-right: 20px;
+    }
+    .banner {
+        padding: 40px 20px;
+    }
+    .livros, .resenhas {
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px; 
+    }
+    .livros h2 {
+        font-size: 30px;
+        grid-column: 1 / -1; 
+        justify-self: start; 
+        margin: 0; 
+        padding: 0; 
+    }
+    .livro, .resenha {
+        width: 75%;
+        box-sizing: border-box;
+        margin: 0px; 
+    }
+}

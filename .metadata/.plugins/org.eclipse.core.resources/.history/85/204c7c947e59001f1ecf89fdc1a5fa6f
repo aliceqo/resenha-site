@@ -1,0 +1,78 @@
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('JavaScript carregado e executando');
+  
+    const pageContainer = document.getElementById('page-container')
+
+    // Navegação
+    const loadPage = (url) => {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                pageContainer.innerHTML = html;
+            })
+            .catch(error => console.error('Erro ao carregar a página:', error));
+    };
+
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const url = link.getAttribute('href');
+            loadPage(url);
+        });
+    });
+
+    // Pesquisar resenha
+    /*const searchWrapper = document.querySelector('.searchForm');
+    const inputBox = searchWrapper = searchWrapper.querySelector('input');
+    const sugestBox = searchWrapper.querySelector('.pesquisarResenha');
+    const button =searchWrapper.querySelector('.button');
+    let linkTag = searchWrapper.querySelector('.append');
+    let webLink;
+    
+    inputBox.onkeyup = function(e) {
+	    let userData = e.target.value;
+	    let emptyArray = [];
+	    
+	    if(e.key == 'Enter'){
+			if(userData){
+				window.open('https://www.google.com/search?q=${userData}', '_blank');
+			}
+		}
+		
+		if (userData) {
+	    button.addEventListener('click', () => {
+	        const webLink = `https://www.google.com/search?q=${encodeURIComponent(userData)}`;
+	        linkTag.setAttribute('href', webLink);
+	        linkTag.click();
+		    });
+		}
+    }
+        
+});*/
+// Seleciona os elementos HTML
+const searchInput = document.getElementById('searchInput');
+const submitButton = document.getElementById('submit');
+const resultadoDiv = document.getElementById('resultado');
+
+// Adiciona um evento de click ao botão de pesquisar
+submitButton.addEventListener('click', (e) => {
+  e.preventDefault(); // Previne o comportamento padrão do botão de submit
+
+  // Obtém o valor do campo de input
+  const searchTerm = searchInput.value.trim();
+
+  // Verifica se o campo de input não está vazio
+  if (searchTerm !== '') {
+    // Realiza a requisição AJAX para o servlet /buscar
+    fetch(`/buscar?searchInput=${searchTerm}`)
+      .then(response => response.text())
+      .then(data => {
+        // Exibe os resultados da pesquisa
+        resultadoDiv.innerHTML = data;
+      })
+      .catch(error => console.error('Erro ao realizar a busca:', error));
+  } else {
+    console.log('Campo de input vazio!');
+  }
+});
+}

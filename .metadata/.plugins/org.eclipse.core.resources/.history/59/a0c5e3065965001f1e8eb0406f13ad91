@@ -1,0 +1,16 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const resenhaId = urlParams.get('id');
+
+    fetch(`/EditarResenhaServlet?id=${resenhaId}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('resenhaId').value = data.id;
+            document.getElementById('url_foto').value = data.urlFoto;
+            document.getElementById('titulo').value = data.titulo;
+            document.getElementById('idade_leitura').value = data.idadeLeitura;
+            document.getElementById('livro').value = data.livro;
+            // Continue preenchendo os outros campos
+        })
+        .catch(error => console.error('Erro ao buscar resenha:', error));
+});

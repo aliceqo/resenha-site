@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../imagens/icone/book.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/stylesInicial.css">
+    <title>Resenhas</title>
+</head>
+<body>
+    <div id="page-container" class="page-content">
+        <header>
+            <h1>Resenhas de Livros</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="resenhas.html">Resenhas</a></li>
+                    <li><a href="administrador/login.html">Administrador</a></li>
+                </ul>
+                <form action="#" method="get">
+                    <input type="text" placeholder="Buscar resenhas...">
+                    <button type="submit">Pesquisar</button>
+                </form>
+            </nav>
+        </header>
+        <section class="resenhas">
+            <div class="resenha">
+                <img src="../imagens/livros/Garoto devora universo.jpg" alt="Garoto devora universo">
+                <h3>Garoto devora universo</h3>
+                <a href="resenhas/GarotoDevoraUniverso.html">Ver Resenha</a>
+            </div>
+            <div class="resenha">
+                <img src="../imagens/livros/Cancao de Aquiles.jpg" alt="A Canção de Aquiles">
+                <h3>A Canção de Aquiles</h3>
+                <a href="resenhas/CancaoDeAquiles.html">Ver Resenha</a>
+            </div>
+            <div class="resenha">
+                <img src="../imagens/livros/Carmilla.jpg" alt="Carmilla">
+                <h3>Carmilla</h3>
+                <a href="resenhas/Carmilla.html">Ver Resenha</a>
+            </div>
+            <div class="resenha">
+                <img src="../imagens/livros/E assim que se perde a guerra do tempo.jpg" alt="É assim que se perde a guerra do tempo">
+                <h3>É assim que se perde a guerra do tempo</h3>
+                <a href="resenhas/EAssimQueSePerdeAGuerraDoTempo.html">Ver Resenha</a>
+            </div>
+            <div class="resenha">
+                <img src="../imagens/livros/A temperatura entre voce e eu.jpg" alt="A temperatura entre eu e você">
+                <h3>A temperatura entre eu e você</h3>
+                <a href="resenhas/ATemperaturaEntreEuEVoce.html">Ver Resenha</a>
+            </div>
+            <div class="resenha">
+                <img src="../imagens/livros/Tudo pelo jogo.jpg" alt="Tudo pelo Jogo">
+                <h3>Tudo pelo Jogo</h3>
+                <a href="resenhas/TudoPeloJogo.html">Ver Resenha</a>
+            </div>
+            <div class="resenha">
+                <img src="../imagens/livros/Jogos vorazes.jpg" alt="Jogos Vorazes">
+                <h3>Jogos Vorazes</h3>
+                <a href="resenhas/JogosVorazes.html">Ver Resenha</a>
+            </div>
+            <div class="resenha">
+                <img src="../imagens/livros/Historia e tudo que me deixou.jpg" alt="História é tudo que me deixou">
+                <h3>História é tudo que me deixou</h3>
+                <a href="resenhas/HistoriaETudoQueMeDeixou.html">Ver Resenha</a>
+            </div>
+            <div class="resenha">
+                <img src="../imagens/livros/Harry Potter.jpg" alt="Harry Potter">
+                <h3>Harry Potter</h3>
+                <a href="resenhas/HarryPotter.html">Ver Resenha</a>
+            </div>
+            <div class="resenha">
+                <img src="../imagens/livros/A selecao.jpg" alt="A seleção">
+                <h3>A seleção</h3>
+                <a href="resenhas/ASelecao.html">Ver Resenha</a>
+            </div>
+        </section>
+    </div>
+</body>
+<script src="../javaScript/scriptsInical.js"></script>
+</html>

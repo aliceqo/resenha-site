@@ -1,0 +1,43 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+	// Função para formatar o título, removendo acentos, espaços e convertendo para minúsculas
+	function formatarTitulo(titulo) {
+		return titulo
+			.normalize('NFD') // Normaliza o texto
+			.replace(/[\u0300-\u036f]/g, '') // Remove acentos
+			.replace(/ /g, '-') // Substitui espaços por hifens
+			.toLowerCase(); // Converte tudo para minúsculas
+	}
+
+	fetch('/back-end/pegarResenhas') // Certifique-se que o endpoint está correto
+		.then(response => response.json())
+		.then(resenhas => {
+			const container = document.getElementById('resenhas-container');
+			container.innerHTML = '';
+
+			resenhas.forEach(resenha => {
+				const resenhaDiv = document.createElement('div');
+				resenhaDiv.className = 'resenha';
+
+				const img = document.createElement('img');
+				img.src = `../${resenha.url_foto}`;
+				console.log(resenha.url_foto);
+
+
+				const title = document.createElement('h3');
+				title.textContent = resenha.titulo;
+
+				const link = document.createElement('a');
+				link.href = `resenhas/${formatarTitulo(resenha.titulo)}.html`;
+				link.textContent = 'Ver Resenha';
+
+				resenhaDiv.appendChild(img);
+				resenhaDiv.appendChild(title);
+				resenhaDiv.appendChild(link);
+				container.appendChild(resenhaDiv);
+			});
+		})
+		.catch(error => {
+			console.error('Erro ao carregar resenhas:', error);
+		});
+});

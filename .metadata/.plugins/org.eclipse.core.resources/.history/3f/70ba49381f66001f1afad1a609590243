@@ -1,0 +1,113 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Obter o parâmetro "id" da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    if (id) {
+        // Fazer uma solicitação GET para buscar os dados da resenha
+        fetch(`/back-end/excluirEditar?id=${id}`)
+            .then(response => response.json()) // Espera-se que o servlet retorne JSON
+            .then(data => {
+                // Preencher o formulário com os dados recebidos
+                document.getElementById('resenhaId').value = data.id || '';
+                document.getElementById('titulo').value = data.titulo || '';
+                document.getElementById('idade_leitura').value = data.idade_leitura || '';
+                document.getElementById('livro').value = data.livro || '';
+                document.getElementById('autor').value = data.autor || '';
+                document.getElementById('tradutor').value = data.tradutor || '';
+                document.getElementById('generos').value = data.generos || '';
+                document.getElementById('idioma').value = data.idioma || '';
+                document.getElementById('editora').value = data.editora || '';
+                document.getElementById('numero_paginas').value = data.numero_paginas || '';
+                document.getElementById('frase_destaque').value = data.frase_destaque || '';
+                document.getElementById('resenha').value = data.conteudo_resenha || '';
+
+                // Definir o URL da imagem se disponível
+                const urlFoto = data.url_foto || '';
+                if (urlFoto) {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = urlFoto;
+                    imgElement.alt = 'Imagem da resenha';
+                    imgElement.style.maxWidth = '200px';
+                    const urlFotoLabel = document.querySelector('label[for="url_foto"]');
+                    if (urlFotoLabel) {
+                        urlFotoLabel.innerHTML = ''; // Limpa o conteúdo anterior
+                        urlFotoLabel.appendChild(imgElement);
+                    } else {
+                        console.error('Elemento para a imagem não encontrado.');
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao carregar os dados da resenha:', error);
+                alert('Erro ao carregar os dados da resenha.');
+            });
+    }
+
+    // Função para enviar dados para o servlet para editar uma resenha
+    document.getElementById('bot-editar-resenha').addEventListener('click', function() {
+        const id = document.getElementById('resenhaId').value;
+        const titulo = document.getElementById('titulo').value;
+        const idadeLeitura = document.getElementById('idade_leitura').value;
+        const livro = document.getElementById('livro').value;
+        const autor = document.getElementById('autor').value;
+        const tradutor = document.getElementById('tradutor').value;
+        const generos = document.getElementById('generos').value;
+        const idioma = document.getElementById('idioma').value;
+        const editora = document.getElementById('editora').value;
+        const numeroPaginas = document.getElementById('numero_paginas').value;
+        const fraseDestaque = document.getElementById('frase_destaque').value;
+        const conteudoResenha = document.getElementById('resenha').value;
+        const urlFotoInput = document.getElementById('url_foto');
+
+        let formData = new FormData();
+        formData.append('id', id);
+        formData.append('titulo', titulo);
+        formData.append('idade_leitura', idadeLeitura);
+        formData.append('livro', livro);
+        formData.append('autor', autor);
+        formData.append('tradutor', tradutor);
+        formData.append('generos', generos);
+        formData.append('idioma', idioma);
+        formData.append('editora', editora);
+        formData.append('numero_paginas', numeroPaginas);
+        formData.append('frase_destaque', fraseDestaque);
+        formData.append('conteudo_resenha', conteudoResenha);
+
+        if (urlFotoInput && urlFotoInput.files.length > 0) {
+            formData.append('url_foto', urlFotoInput.files[0]);
+        }
+
+        fetch('/back-end/excluirEditar', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Resenha atualizada com sucesso:', data);
+            alert('Resenha atualizada com sucesso!');
+        })
+        .catch(error => {
+            console.error('Erro ao atualizar a resenha:', error);
+            alert('Erro ao atualizar a resenha.');
+        });
+    });
+
+    // Função para enviar uma solicitação DELETE para excluir uma resenha
+    document.getElementById('bot-excluir-resenha').addEventListener('click', function() {
+        const id = document.getElementById('resenhaId').value;
+
+        fetch(`/back-end/excluirEditar?id=${id}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Resenha excluída com sucesso:', data);
+            alert('Resenha excluída com sucesso!');
+        })
+        .catch(error => {
+            console.error('Erro ao excluir a resenha:', error);
+            alert('Erro ao excluir a resenha.');
+        });
+    });
+});

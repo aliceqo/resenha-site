@@ -1,0 +1,119 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const form1 = document.getElementById('form-edit-resenha');
+    const form2 = document.getElementById('resenha_frase');
+    const botEditarResenha = document.getElementById('bot-editar-resenha');
+    const botExcluirResenha = document.getElementById('bot-excluir-resenha');
+
+    // Função para enviar dados do formulário 1
+    form1.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form1);
+
+        fetch('/back-end/excluirEditar', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then((message) => {
+            console.log(message);
+            window.location.href = 'editarResenha.html';
+        })
+        .catch((error) => {
+            console.error(error);
+            window.location.href = 'erro.html';
+        });
+    });
+
+    // Função para enviar dados do formulário 2
+    form2.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form2);
+
+        fetch('/back-end/excluirEditar', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then((message) => {
+            console.log(message);
+            window.location.href = 'editarResenha.html';
+        })
+        .catch((error) => {
+            console.error(error);
+            window.location.href = 'erro.html';
+        });
+    });
+
+    // Função para enviar dados para editar uma resenha
+    botEditarResenha.addEventListener('click', () => {
+        const id = document.getElementById('resenhaId').value;
+        const titulo = document.getElementById('titulo').value;
+        const idadeLeitura = document.getElementById('idade_leitura').value;
+        const livro = document.getElementById('livro').value;
+        const autor = document.getElementById('autor').value;
+        const tradutor = document.getElementById('tradutor').value;
+        const generos = document.getElementById('generos').value;
+        const idioma = document.getElementById('idioma').value;
+        const editora = document.getElementById('editora').value;
+        const numeroPaginas = document.getElementById('numero_paginas').value;
+        const fraseDestaque = document.getElementById('frase_destaque').value;
+        const conteudoResenha = document.getElementById('resenha').value;
+        const urlFotoInput = document.getElementById('url_foto');
+
+        let formData = new FormData();
+        formData.append('id', id);
+        formData.append('titulo', titulo);
+        formData.append('idade_leitura', idadeLeitura);
+        formData.append('livro', livro);
+        formData.append('autor', autor);
+        formData.append('tradutor', tradutor);
+        formData.append('generos', generos);
+        formData.append('idioma', idioma);
+        formData.append('editora', editora);
+
+        // Garantir que o número de páginas seja um número válido
+        const numeroPaginasNumber = parseInt(numeroPaginas, 10);
+        formData.append('numero_paginas', isNaN(numeroPaginasNumber) ? '' : numeroPaginasNumber);
+
+        formData.append('frase_destaque', fraseDestaque);
+        formData.append('conteudo_resenha', conteudoResenha);
+
+        if (urlFotoInput && urlFotoInput.files.length > 0) {
+            formData.append('url_foto', urlFotoInput.files[0]);
+        }
+
+        fetch('/back-end/excluirEditar', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Resenha atualizada com sucesso:', data);
+            alert('Resenha atualizada com sucesso!');
+        })
+        .catch(error => {
+            console.error('Erro ao atualizar a resenha:', error);
+            alert('Erro ao atualizar a resenha.');
+        });
+    });
+
+    // Função para excluir uma resenha
+    botExcluirResenha.addEventListener('click', () => {
+        const id = document.getElementById('resenhaId').value;
+
+        fetch(`/back-end/excluirEditar?id=${id}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Resenha excluída com sucesso:', data);
+            alert('Resenha excluída com sucesso!');
+        })
+        .catch(error => {
+            console.error('Erro ao excluir a resenha:', error);
+            alert('Erro ao excluir a resenha.');
+        });
+    });
+});

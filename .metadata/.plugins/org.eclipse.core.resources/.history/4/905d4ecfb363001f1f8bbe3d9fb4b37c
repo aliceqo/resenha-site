@@ -1,0 +1,34 @@
+document.addEventListener("DOMContentLoaded", function() {
+  const formAddResenha = document.getElementById("form-add-resenha");
+  const formRasResenha = document.getElementById("form-ras-resenha");
+  const form = document.getElementById("adicionar-resenha");
+
+  document.addEventListener("DOMContentLoaded", function() {
+  const form = document.getElementById("adicionar-resenha");
+
+	  if (form) {
+	    form.addEventListener("submit", handleFormSubmit);
+	  }
+	
+	  function handleFormSubmit(event) {
+	    event.preventDefault();
+	
+	    const formData = new FormData(form);
+	
+	    fetch("/back-end/adicionar", {
+	      method: "POST",
+	      body: formData
+	    })
+	    .then(response => {
+	      if (response.ok) {
+	        window.location.href = "indexAdm.html";
+	      } else {
+	        console.error("Erro ao adicionar resenha:", response.statusText);
+	      }
+	    })
+	    .catch(error => {
+	      console.error("Erro ao adicionar resenha:", error);
+	    });
+	  }
+	});
+});

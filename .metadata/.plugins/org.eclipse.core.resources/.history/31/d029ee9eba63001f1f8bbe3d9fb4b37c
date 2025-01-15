@@ -1,0 +1,49 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const submitButton = document.querySelector("button[type='submit']");
+
+    if (submitButton) {
+        submitButton.addEventListener("click", async (event) => {
+            event.preventDefault(); // Evita o envio padrão do formulário
+
+            // Coleta os dados dos formulários
+            const formData = new FormData();
+            const formAddResenha = document.getElementById("form-add-resenha");
+            const formResenhaFrase = document.getElementById("resenha_frase");
+
+            // Adiciona todos os campos do primeiro formulário
+            for (const pair of new FormData(formAddResenha)) {
+                formData.append(pair[0], pair[1]);
+            }
+
+            // Adiciona todos os campos do segundo formulário
+            for (const pair of new FormData(formResenhaFrase)) {
+                formData.append(pair[0], pair[1]);
+            }
+
+            // Logs para depuração
+            for (const pair of formData.entries()) {
+                console.log(`${pair[0]}: ${pair[1]}`);
+            }
+
+            try {
+                const response = await fetch("http://localhost:8080/back-end/adicionar", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro ao enviar o formulário: ${response.statusText}`);
+                }
+
+                const result = await response.text();
+                console.log(result);
+                alert("Resenha adicionada com sucesso!");
+                // Redirecionar ou limpar o formulário, se necessário
+                window.location.href = "indexAdm.html"; // Exemplo de redirecionamento
+            } catch (error) {
+                console.error("Erro:", error);
+                alert("Erro ao enviar o formulário");
+            }
+        });
+    }
+});

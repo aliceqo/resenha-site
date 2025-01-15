@@ -1,0 +1,40 @@
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('JavaScript carregado e executando');
+
+    const pageContainer = document.getElementById('page-container');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const searchForm = document.getElementById('searchForm');
+
+    if (searchInput && searchResults && searchForm) {
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value;
+
+            if (query.length < 3) {
+                searchResults.innerHTML = ''; 
+                return;
+            }
+
+            fetch(`/back-end/pesquisa/pesquisarResenha?searchInput=${encodeURIComponent(query)}`)
+                .then(response => response.text()) 
+                .then(data => {
+                    searchResults.innerHTML = data;
+                })
+                .catch(error => console.error('Erro:', error));
+        });
+
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const searchQuery = searchInput.value;
+
+            if (searchQuery.length < 3) {
+                return;
+            }
+
+            window.location.href = `/back-end/pesquisa/pesquisarResenha?searchInput=${encodeURIComponent(searchQuery)}`;
+        });
+    } else {
+        console.error('Elementos de busca não encontrados!');
+    }
+});

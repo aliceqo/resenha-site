@@ -1,0 +1,58 @@
+const formEditResenha = document.getElementById('form-edit-resenha');
+const formResenhaFrase = document.getElementById('resenha_frase');
+const botaoEditarResenha = document.getElementById('bot-editar-resenha');
+const botaoExcluirResenha = document.getElementById('bot-excluir-resenha');
+
+formEditResenha.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const formData = new FormData(formEditResenha);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'back-end/excluirEditar', true);
+  xhr.send(formData);
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      console.log('Resenha editada com sucesso!');
+    } else {
+      console.error('Erro ao editar a resenha:', xhr.statusText);
+    }
+  };
+});
+
+formResenhaFrase.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const formData = new FormData(formResenhaFrase);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'back-end/excluirEditar', true);
+  xhr.send(formData);
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      console.log('Frase de destaque salva com sucesso!');
+    } else {
+      console.error('Erro ao salvar a frase de destaque:', xhr.statusText);
+    }
+  };
+});
+
+botaoExcluirResenha.addEventListener('click', function(event) {
+  event.preventDefault();
+
+  const id = document.getElementById('resenhaId').value;
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'back-end/excluirEditar?id=' + id, true);
+  xhr.send();
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      console.log('Resenha excluída com sucesso!');
+    } else {
+      console.error('Erro ao excluir a resenha:', xhr.statusText);
+    }
+  };
+});

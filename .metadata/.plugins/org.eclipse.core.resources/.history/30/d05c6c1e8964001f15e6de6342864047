@@ -1,0 +1,35 @@
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("editarResenhaForm");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // Evita o envio padrão do formulário
+
+        const formData = new FormData(form);
+        const data = {
+            id: formData.get("id"),
+            titulo: formData.get("titulo"),
+            conteudoResenha: formData.get("conteudoResenha")
+        };
+
+        fetch("/atualizarResenha", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert("Resenha atualizada com sucesso!");
+                // Redirecionar ou atualizar a página conforme necessário
+            } else {
+                alert("Erro ao atualizar resenha.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+            alert("Erro ao atualizar resenha.");
+        });
+    });
+});

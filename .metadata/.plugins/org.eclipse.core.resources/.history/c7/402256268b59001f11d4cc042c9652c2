@@ -1,0 +1,51 @@
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('JavaScript carregado e executando');
+  
+    const pageContainer = document.getElementById('page-container');
+
+    // Função para carregar a página via navegação
+    const loadPage = (url) => {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                pageContainer.innerHTML = html;
+            })
+            .catch(error => console.error('Erro ao carregar a página:', error));
+    };
+
+    // Adiciona eventos de navegação aos links no nav
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const url = link.getAttribute('href');
+            loadPage(url);
+        });
+    });
+
+    // Seleciona os elementos HTML da barra de pesquisa
+    const searchInput = document.getElementById('searchInput');
+    const submitButton = document.getElementById('submit');
+    const resultadoDiv = document.getElementById('resultado');
+
+    // Adiciona um evento de click ao botão de pesquisar
+    submitButton.addEventListener('click', (e) => {
+        e.preventDefault(); // Previne o comportamento padrão do botão de submit
+
+        // Obtém o valor do campo de input
+        const searchTerm = searchInput.value.trim();
+
+        // Verifica se o campo de input não está vazio
+        if (searchTerm !== '') {
+            // Realiza a requisição AJAX para o servlet /buscar
+            fetch(`/back-end/buscar?searchInput=${encodeURIComponent(searchTerm)}`)
+                .then(response => response.text())
+                .then(data => {
+                    // Exibe os resultados da pesquisa
+                    resultadoDiv.innerHTML = data;
+                })
+                .catch(error => console.error('Erro ao realizar a busca:', error));
+        } else {
+            console.log('Campo de input vazio!');
+        }
+    });
+});

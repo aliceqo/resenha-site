@@ -1,0 +1,46 @@
+package resenha;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import model.DAO;
+import model.Resenha;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+@WebServlet("/editarExcluir")
+public class editarExcluirResenha extends HttpServlet {
+	    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        int resenhaId = Integer.parseInt(request.getParameter("id"));
+	        
+	        // Buscar a resenha no banco de dados
+	        Resenha resenha = ResenhaDAO.getResenhaById(resenhaId);
+
+	        // Converter a resenha em JSON
+	        String resenhaJson = new Gson().toJson(resenha);
+
+	        // Retornar o JSON como resposta
+	        response.setContentType("application/json");
+	        response.getWriter().write(resenhaJson);
+	    }
+
+	    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        BufferedReader reader = request.getReader();
+	        Resenha resenha = new Gson().fromJson(reader, Resenha.class);
+	        
+	        // Atualizar a resenha no banco de dados
+	        boolean updated = ResenhaDAO.updateResenha(resenha);
+
+	        // Retornar o status da operação
+	        if (updated) {
+	            response.setStatus(HttpServletResponse.SC_OK);
+	        } else {
+	            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	        }
+	    }
+	}

@@ -1,0 +1,209 @@
+package resenha;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import model.DAO;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+@WebServlet("/excluirEditar")
+@MultipartConfig
+public class ExcluirEditarResenha extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private DAO dao = new DAO();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String id = request.getParameter("id");
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = dao.conectar(); 
+            String query = "SELECT * FROM resenhas WHERE id = ?";
+            pstmt = conn.prepareStatement(query); 
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                request.setAttribute("resenhaId", rs.getString("id"));
+                request.setAttribute("urlFoto", rs.getString("url_foto"));
+                request.setAttribute("titulo", rs.getString("titulo"));
+                request.setAttribute("idadeLeitura", rs.getString("idade_leitura"));
+                request.setAttribute("livro", rs.getString("livro"));
+                request.setAttribute("autor", rs.getString("autor"));
+                request.setAttribute("tradutor", rs.getString("tradutor"));
+                request.setAttribute("generos", rs.getString("generos"));
+                request.setAttribute("idioma", rs.getString("idioma"));
+                request.setAttribute("editora", rs.getString("editora"));
+                request.setAttribute("numeroPaginas", rs.getInt("numero_paginas"));
+                request.setAttribute("fraseDestaque", rs.getString("frase_destaque"));
+                request.setAttribute("conteudoResenha", rs.getString("conteudo_resenha"));
+            }
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/html/administrador/editarResenha.jsp");
+            dispatcher.forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    	System.out.println("doPost chamada");
+        String idParam = request.getParameter("resenhaId");
+        if (idParam == null || idParam.isEmpty()) {
+            System.out.println("resenhaId é nulo ou vazio");
+            response.sendRedirect("erro.html");
+            return;
+        }
+
+        int id = Integer.parseInt(idParam);
+
+        if (request.getParameter("titulo") != null) {
+            String titulo = request.getParameter("titulo");
+            String idadeLeitura = request.getParameter("idade_leitura");
+            String livro = request.getParameter("livro");
+            String autor = request.getParameter("autor");
+            String tradutor = request.getParameter("tradutor");
+            String generos = request.getParameter("generos");
+            String idioma = request.getParameter("idioma");
+            String editora = request.getParameter("editora");
+
+            int numeroPaginas;
+            try {
+                numeroPaginas = Integer.parseInt(request.getParameter("numero_paginas"));
+            } catch (NumberFormatException e) {
+                response.sendRedirect("erro.html");
+                return;
+            }
+
+            Part filePart = request.getPart("url_foto");
+            String urlFoto = "";
+            if (filePart != null && filePart.getSize() > 0) {
+                String fileName = filePart.getSubmittedFileName();
+                InputStream fileContent = filePart.getInputStream();
+                urlFoto = processFile(fileName, fileContent);
+            }
+
+            try (Connection connection = dao.conectar()) {
+                String sql = "UPDATE resenhas SET url_foto = ?, titulo = ?, idade_leitura = ?, livro = ?, autor = ?, tradutor = ?, "
+                        + "generos = ?, idioma = ?, editora = ?, numero_paginas = ? WHERE id = ?";
+
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, urlFoto);
+                    statement.setString(2, titulo);
+                    statement.setString(3, idadeLeitura);
+                    statement.setString(4, livro);
+                    statement.setString(5, autor);
+                    statement.setString(6, tradutor);
+                    statement.setString(7, generos);
+                    statement.setString(8, idioma);
+                    statement.setString(9, editora);
+                    statement.setInt(10, numeroPaginas);
+                    statement.setInt(11, id);
+
+                    int rowsAffected = statement.executeUpdate();
+                    if (rowsAffected > 0) {
+                        response.sendRedirect("sucesso.html");
+                    } else {
+                        response.sendRedirect("erro.html");
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                response.sendRedirect("erro.html");
+            }
+        } else if (request.getParameter("frase_destaque") != null) {
+            String fraseDestaque = request.getParameter("frase_destaque");
+            String conteudoResenha = request.getParameter("conteudo_resenha");
+
+            try (Connection connection = dao.conectar()) {
+                String sql = "UPDATE resenhas SET frase_destaque = ?, conteudo_resenha = ? WHERE id = ?";
+
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, fraseDestaque);
+                    statement.setString(2, conteudoResenha);
+                    statement.setInt(3, id);
+
+                    int rowsAffected = statement.executeUpdate();
+                    if (rowsAffected > 0) {
+                        response.sendRedirect("sucesso.html");
+                    } else {
+                        response.sendRedirect("erro.html");
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                response.sendRedirect("erro.html");
+            }
+        } else {
+            response.sendRedirect("erro.html");
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String idParam = request.getParameter("id");
+        if (idParam == null || idParam.isEmpty()) {
+            response.sendRedirect("erro.html");
+            return;
+        }
+
+        int id = Integer.parseInt(idParam);
+
+        try (Connection connection = dao.conectar()) {
+            String sql = "DELETE FROM resenhas WHERE id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, id);
+
+                int rowsAffected = statement.executeUpdate();
+                if (rowsAffected > 0) {
+                    response.sendRedirect("sucesso.html");
+                } else {
+                    response.sendRedirect("erro.html");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendRedirect("erro.html");
+        }
+    }
+
+    private String processFile(String fileName, InputStream fileContent) throws IOException {
+        String filePath = "back-end/src/main/webapp/imagens" + fileName; 
+        java.io.File file = new java.io.File(filePath);
+        try (java.io.OutputStream os = new java.io.FileOutputStream(file)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fileContent.read(buffer)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+        }
+        return filePath;
+    }
+}

@@ -1,0 +1,72 @@
+package resenha;
+
+import java.io.IOException;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import model.Resenha;
+import model.ResenhaDAO;
+
+
+
+@WebServlet(name = "EditarResenhaServlet", urlPatterns = {"/editarResenha"})
+public class editarExcluirResenha extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+    private ResenhaDAO resenhaDAO;
+
+    @Override
+    public void init() throws ServletException {
+        resenhaDAO = new ResenhaDAO();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int idResenha = Integer.parseInt(request.getParameter("id"));
+        
+        Resenha resenha = resenhaDAO.buscarResenhaPorId(idResenha);
+        
+        if (resenha != null) {
+            request.setAttribute("resenha", resenha);
+            request.getRequestDispatcher("/editarResenha.html").forward(request, response);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Resenha não encontrada");
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int idResenha = Integer.parseInt(request.getParameter("resenhaId"));
+        String titulo = request.getParameter("titulo");
+        String urlFoto = request.getParameter("url_foto"); 
+        String idadeLeitura = request.getParameter("idade_leitura");
+        String livro = request.getParameter("livro");
+        String autor = request.getParameter("autor");
+        String tradutor = request.getParameter("tradutor");
+        String generos = request.getParameter("generos");
+        String idioma = request.getParameter("idioma");
+        String editora = request.getParameter("editora");
+        int numeroPaginas = Integer.parseInt(request.getParameter("numero_paginas"));
+        String fraseDestaque = request.getParameter("frase_destaque");
+        String conteudoResenha = request.getParameter("conteudo_resenha");
+
+        resenhaDAO.atualizarResenha(idResenha, titulo, urlFoto, idadeLeitura, livro, autor, tradutor, generos, idioma, editora, numeroPaginas, fraseDestaque, conteudoResenha);
+
+        response.sendRedirect("resenhas.html");
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int idResenha = Integer.parseInt(request.getParameter("id"));
+
+        resenhaDAO.excluirResenha(idResenha);
+
+        response.sendRedirect("resenhas.html");
+    }
+}

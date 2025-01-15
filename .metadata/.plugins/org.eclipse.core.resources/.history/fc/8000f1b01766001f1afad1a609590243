@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../imagens/icone/book.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../css/stylesAddResenhas.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+    <title>Adicionar Resenha</title>
+</head>
+<body>
+    <div id="page-container" class="page-content">
+        <header>
+            <h1>Resenhas de Livros</h1>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Início</a></li>
+                    <li><a href="indexAdm.html">Início Adm</a></li>
+                    <li><a href="../resenhas.html">Resenhas</a></li>
+                </ul>
+                <form id="searchForm">
+                    <input type="text" id="searchInput" name="searchInput" placeholder="Buscar resenhas...">
+                    <button type="submit" id="submit">Pesquisar</button>
+                    <div id="resultado"></div>
+                </form>
+            </nav>
+        </header>
+
+        <section class="informacoes">
+            <h1>Adicionar Nova Resenha</h1>
+            <form id="form-add-resenha" enctype="multipart/form-data">
+                <label for="imagem">Imagem da Capa:</label>
+                <input type="file" id="url_foto" name="url_foto" accept="image/*" value="urlFoto">
+                
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" value="titulo">
+
+                <label for="idade">Idade de leitura:</label>
+                <input type="text" id="idade_leitura" name="idade_leitura" value="idadeLeitura">
+
+                <label for="livro">Livro:</label>
+                <input type="text" id="livro" name="livro" placeholder="Ex: Livro 1 de 3" value="livro">
+
+                <label for="autor">Autor:</label>
+                <input type="text" id="autor" name="autor" value="autor">
+
+                <label for="tradutor">Tradutor:</label>
+                <input type="text" id="tradutor" name="tradutor" value="tradutor">
+
+                <label for="generos">Gêneros:</label>
+                <input type="text" id="generos" name="generos" value="generos">
+
+                <label for="idioma">Idioma:</label>
+                <input type="text" id="idioma" name="idioma" value="idioma">
+
+                <label for="editora">Editora:</label>
+                <input type="text" id="editora" name="editora" value="editora">
+
+                <label for="numeroPaginas">Número de páginas:</label>
+                <input type="number" id="numero_paginas" name="numero_paginas" value="numeroPagina">
+            </form>
+        </section>
+
+        <section class="resenha">
+            <h1>Frase de Destaque</h1>
+            <form id="resenha_frase">
+                <label for="frase_destaque"></label>
+                <input type="text" id="frase_destaque" name="frase_destaque" class="dancing-script" placeholder="Digite a frase de destaque" value="fraseDestaque">
+
+                <h2>Texto da Resenha</h2>
+                <textarea id="resenha" name="conteudo_resenha" rows="10" placeholder="Digite o texto da resenha">conteudoResenha</textarea>
+            </form>
+        </section>
+        
+        <div class="submit-container">
+            <button type="submit" id="bot-add-resenha">Adicionar Resenha</button>
+            <button type="submit" id="bot-ras-resenha">Rascunho Resenha</button>
+        </div>
+    </div>
+    <script src="../../javaScript/scriptsInicial.js" defer></script>
+    <script src="../../javaScript/adicionarResenha.js" defer></script>
+</body>
+</html>

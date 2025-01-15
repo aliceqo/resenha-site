@@ -1,0 +1,90 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class ResenhaDAO {
+    private static DAO dao;
+
+    public ResenhaDAO() {
+        this.dao = new DAO();
+    }
+
+    public static Resenha buscarResenhaPorId(int id) {
+        Resenha resenha = null;
+        String sql = "SELECT * FROM resenhas WHERE id = ?";
+        
+        try (Connection con = dao.conectar();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+             
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                resenha = new Resenha();
+                resenha.setId(rs.getInt("id"));
+                resenha.setTitulo(rs.getString("titulo"));
+                resenha.setUrlFoto(rs.getString("url_foto"));
+                resenha.setIdadeLeitura(rs.getString("idade_leitura"));
+                resenha.setLivro(rs.getString("livro"));
+                resenha.setAutor(rs.getString("autor"));
+                resenha.setTradutor(rs.getString("tradutor"));
+                resenha.setGeneros(rs.getString("generos"));
+                resenha.setIdioma(rs.getString("idioma"));
+                resenha.setEditora(rs.getString("editora"));
+                resenha.setNumeroPaginas(rs.getInt("numero_paginas"));
+                resenha.setFraseDestaque(rs.getString("frase_destaque"));
+                resenha.setConteudoResenha(rs.getString("conteudo_resenha"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return resenha;
+    }
+
+    public void atualizarResenha(int id, String titulo, String urlFoto, String idadeLeitura, String livro, 
+                                 String autor, String tradutor, String generos, String idioma, 
+                                 String editora, int numeroPaginas, String fraseDestaque, String conteudoResenha) {
+        String sql = "UPDATE resenhas SET titulo = ?, url_foto = ?, idade_leitura = ?, livro = ?, autor = ?, "
+                   + "tradutor = ?, generos = ?, idioma = ?, editora = ?, numero_paginas = ?, "
+                   + "frase_destaque = ?, conteudo_resenha = ? WHERE id = ?";
+        
+        try (Connection con = dao.conectar();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+             
+            stmt.setString(1, titulo);
+            stmt.setString(2, urlFoto);
+            stmt.setString(3, idadeLeitura);
+            stmt.setString(4, livro);
+            stmt.setString(5, autor);
+            stmt.setString(6, tradutor);
+            stmt.setString(7, generos);
+            stmt.setString(8, idioma);
+            stmt.setString(9, editora);
+            stmt.setInt(10, numeroPaginas);
+            stmt.setString(11, fraseDestaque);
+            stmt.setString(12, conteudoResenha);
+            stmt.setInt(13, id);
+            
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void excluirResenha(int id) {
+        String sql = "DELETE FROM resenhas WHERE id = ?";
+        
+        try (Connection con = dao.conectar();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+             
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

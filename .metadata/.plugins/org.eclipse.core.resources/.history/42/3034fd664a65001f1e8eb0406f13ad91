@@ -1,0 +1,100 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const botEditarResenha = document.getElementById('bot-editar-resenha');
+    const botExcluirResenha = document.getElementById('bot-excluir-resenha');
+
+    if (!botEditarResenha || !botExcluirResenha) {
+        console.error('Botões não encontrados. Verifique os IDs no HTML.');
+        return;
+    }
+
+    // Obter o ID da URL
+    const queryParams = new URLSearchParams(window.location.search);
+    const resenhaId = queryParams.get('id');
+
+    if (!resenhaId) {
+        console.error('ID da resenha não encontrado na URL.');
+        return;
+    }
+
+    // Função para preencher o formulário com os dados da resenha
+    function preencherFormulario(resenha) {
+        document.getElementById('resenhaId').value = resenha.id;
+        document.getElementById('titulo').value = resenha.titulo;
+        document.getElementById('url_foto').value = resenha.url_foto; // Para arquivos, você precisará de uma abordagem diferente
+        document.getElementById('idade_leitura').value = resenha.idadeLeitura;
+        document.getElementById('livro').value = resenha.livro;
+        document.getElementById('autor').value = resenha.autor;
+        document.getElementById('tradutor').value = resenha.tradutor;
+        document.getElementById('generos').value = resenha.generos;
+        document.getElementById('idioma').value = resenha.idioma;
+        document.getElementById('editora').value = resenha.editora;
+        document.getElementById('numero_paginas').value = resenha.numeroPaginas;
+        document.getElementById('frase_destaque').value = resenha.fraseDestaque;
+        document.getElementById('resenha').value = resenha.conteudoResenha;
+    }
+
+    // Função para carregar os dados da resenha
+    function carregarDadosResenha() {
+        fetch(`/editarResenha?id=${resenhaId}`, {
+            method: 'GET'
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Erro ao carregar dados da resenha.');
+            }
+        }).then(data => {
+            preencherFormulario(data);
+        }).catch(error => {
+            console.error('Erro:', error);
+        });
+    }
+
+    carregarDadosResenha();
+
+    botEditarResenha.addEventListener('click', function () {
+        const formData = new FormData();
+        formData.append('id', resenhaId);
+        formData.append('titulo', document.getElementById('titulo').value);
+        formData.append('imagem', document.getElementById('url_foto').files[0]); // Arquivo deve ser enviado via FormData
+        formData.append('idade_leitura', document.getElementById('idade_leitura').value);
+        formData.append('livro', document.getElementById('livro').value);
+        formData.append('autor', document.getElementById('autor').value);
+        formData.append('tradutor', document.getElementById('tradutor').value);
+        formData.append('generos', document.getElementById('generos').value);
+        formData.append('idioma', document.getElementById('idioma').value);
+        formData.append('editora', document.getElementById('editora').value);
+        formData.append('numero_paginas', document.getElementById('numero_paginas').value);
+        formData.append('frase_destaque', document.getElementById('frase_destaque').value);
+        formData.append('conteudo_resenha', document.getElementById('resenha').value);
+
+        fetch(`/editarResenha?id=${resenhaId}`, {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = 'resenhas.html';
+            } else {
+                alert('Erro ao atualizar a resenha.');
+            }
+        }).catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao atualizar a resenha.');
+        });
+    });
+
+    botExcluirResenha.addEventListener('click', function () {
+        fetch(`/editarResenha?id=${resenhaId}`, {
+            method: 'DELETE'
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = 'resenhas.html';
+            } else {
+                alert('Erro ao excluir a resenha.');
+            }
+        }).catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao excluir a resenha.');
+        });
+    });
+});

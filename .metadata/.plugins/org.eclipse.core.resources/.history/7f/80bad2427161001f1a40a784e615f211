@@ -1,0 +1,37 @@
+document.addEventListener("DOMContentLoaded", function() {
+  // Obtém referências aos formulários
+  const formAddResenha = document.getElementById("form-add-resenha");
+  const formRasResenha = document.getElementById("form-ras-resenha");
+  const form = document.getElementById("adicionar-resenha");
+
+  // Função para enviar o formulário
+  function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+
+    fetch("/back-end/adicionar", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        window.location.href = "indexAdm.html";
+      } else {
+        console.error("Erro ao adicionar resenha:", response.statusText);
+      }
+    })
+    .catch(error => {
+      console.error("Erro ao adicionar resenha:", error);
+    });
+  }
+
+  // Adiciona os eventos de clique aos botões de envio
+  if (formAddResenha) {
+    formAddResenha.addEventListener("click", handleFormSubmit);
+  }
+  
+  if (formRasResenha) {
+    formRasResenha.addEventListener("click", handleFormSubmit);
+  }
+});

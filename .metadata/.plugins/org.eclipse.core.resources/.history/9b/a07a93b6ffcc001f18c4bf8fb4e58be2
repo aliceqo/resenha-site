@@ -1,0 +1,293 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F4A460;
+    padding-bottom: 70px;
+}
+
+.page-content {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.page-content.hidden {
+    opacity: 0;
+}
+
+header {
+    background-image: url('../imagens/fundo/fundo1.png');
+    background-size: cover; 
+    background-position: center; 
+    color: #F4A460;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #363636;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+header nav form {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+header nav form input {
+    padding: 5px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px; 
+    outline: none;
+    width: 200px;
+    background-color: #F4A460;
+    color: #FFFAFA;
+}
+
+header nav form input::placeholder {
+    color: #FFFAFA; 
+}
+
+header nav form button {
+    padding: 5px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    background-color: #F4A460;
+    color: #FFFAFA;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+header nav form button:hover {
+    background-color: #eb8c3a;
+    color: #FFFAFA;
+}
+
+#searchForm {
+	position: relative;
+}
+
+#resultado {
+	display: none; 
+	position: absolute;
+	top: 100%; 
+	left: 39%;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 25px;
+	width: 310px;
+	max-height: 150px;
+	z-index: 1000; 
+}
+
+#resultado a {
+	display: block; 
+    text-decoration: none;
+    text-align:left; 
+    color: inherit;        
+    cursor: default;   
+}
+
+#searchForm:focus-within #resultado,
+#searchInput:focus + #resultado {
+ 	display: block; 
+}
+
+.informacoes {
+    background-color: #FFFAFA;
+    color: #1C1C1C;
+    padding: 50px;
+    width: 300px;
+    top: 220px;
+    margin-left: 20px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.informacoes h1 {
+    color: #eb8c3a;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.informacoes label {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #1C1C1C;
+}
+
+.informacoes input,
+.informacoes textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.informacoes .btn-imagem {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F4A460;
+    color: #FFFAFA;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.informacoes .btn-imagem:hover {
+    background-color: #eb8c3a;
+}
+
+.resenha {
+    background-color: #FFFAFA;
+    color: #1C1C1C;
+    padding: 50px;
+    height: 720px;
+    margin-left: 440px;
+    margin-right: 20px;
+    margin-top: 53.5px;
+    border-radius: 10px;
+}
+
+.resenha h1 {
+    font-family: "Dancing Script", cursive;
+    font-weight: 400; 
+    color: #eb8c3a;
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.resenha h2 {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.resenha input,
+.resenha textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.resenha textarea[id="resenha"] {
+    width: 100%;
+    height: 450px;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.submit-container button {
+    padding: 20px 70px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFFAFA;
+    color: #F4A460;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-container button:hover {
+    background-color: #FFE4C4;
+}
+
+.dancing-script {
+    font-family: "Dancing Script", cursive;
+    color: #eb8c3a;
+    font-size: 16px; 
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+}
+
+
+@media only screen and (min-width: 767px) and (max-width: 1024px) {
+    header {
+        background-image: url('../imagens/fundo/fundo2.png');
+        background-size: cover; 
+        background-position: center;
+        padding: 20px;
+    }
+
+    .informacoes {
+        margin-left: 15px;
+        width: 86%;
+        padding-left: 20px; 
+        padding-top: 20px;
+    }
+
+    .resenha {
+        margin-left: 15px;
+        margin-top: 850px;
+        width: 82%;
+    }
+
+    .resenha h1 {
+        font-size: 30px;
+    }
+}
+
+@media only screen and (max-width: 410px) {
+    header {
+        background-image: url('../imagens/fundo/fundo2.png');
+        background-size: cover; 
+        background-position: center;
+        padding: 30px; /* Reduzir o padding para se ajustar a telas menores */
+    }
+
+    .informacoes {
+        margin-left: 10px; /* Reduzir a margem */
+        width: 100%; /* Aumentar a largura para ocupar toda a tela */
+        padding-left: 10px; /* Ajustar o padding */
+        padding-top: 15px; /* Reduzir o padding superior */
+    }
+
+    .resenha {
+        margin-left: 10px; /* Ajustar a margem */
+        margin-top: 50px; /* Ajustar o topo para melhor exibição em telas pequenas */
+        width: 100%; /* Aumentar a largura para ocupar toda a tela */
+    }
+
+    .resenha h1 {
+        font-size: 22px; /* Ajustar o tamanho da fonte para telas pequenas */
+    }
+}

@@ -1,0 +1,242 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F4A460;
+}
+
+.page-content {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.page-content.hidden {
+    opacity: 0;
+}
+
+
+header {
+    background-image: url('../imagens/fundo/fundo1.png');
+    background-size: cover; 
+    background-position: center; 
+    color: #F4A460;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #363636;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+header nav form {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+header nav form input {
+    padding: 5px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px; 
+    outline: none;
+    width: 200px;
+    background-color: #F4A460;
+    color: #FFFAFA;
+}
+
+header nav form input::placeholder {
+    color: #FFFAFA; 
+}
+
+header nav form button {
+    padding: 5px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    background-color: #F4A460;
+    color: #FFFAFA;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+header nav form button:hover {
+    background-color: #eb8c3a;
+    color: #FFFAFA;
+}
+
+#resultado {
+    background-color: black;
+}
+
+.banner {
+    background-image: url('banner.jpg');
+    background-size: cover;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.banner h2 {
+    color: #FFFAFA;
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.banner p {
+    color: #1C1C1C;
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.livros, .resenhas {
+    color: #eb8c3a;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 0px;
+    justify-items: center;
+}
+
+.livros h2{
+    color: #FFFAFA;
+}
+
+.livro, .resenha {
+    text-align: center;
+    margin: 0 20px 40px;
+    padding: 20px;
+    background-color:#FFFAFA;
+    color: #eb8c3a;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    max-width: 300px;
+    transition: transform 0.3s ease;
+}
+
+.livro:hover, .resenha:hover {
+    transform: translateY(-5px);
+}
+
+.livro img, .resenha img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    margin-bottom: -15px;
+    border-radius: 10px;
+    border: 3px solid #eb8c3a;
+}
+
+.livro h3, .resenha h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+
+.livro a, .resenha a {
+    background-color: #F4A460;;
+    color: #FFFAFA;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.livro a:hover, .resenha a:hover {
+    background-color: #eb8c3a;
+}
+
+/* Seu CSS original aqui */
+
+/* Adicionando media queries para dispositivos móveis e tela dividida */
+
+/* Tela pequena (celular) */
+@media only screen and (max-width: 480px) {
+    /* Ajustes para tela pequena */
+    header {
+      padding: 10px;
+    }
+    nav ul li {
+      margin-right: 10px;
+    }
+    .banner {
+      padding: 20px 10px;
+    }
+    .livros, .resenhas {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .livro, .resenha {
+      margin: 0 10px 20px;
+    }
+  }
+  
+  /* Tela média (tablet) */
+  @media only screen and (min-width: 481px) and (max-width: 768px) {
+    /* Ajustes para tela média */
+    header {
+      padding: 15px;
+    }
+    nav ul li {
+      margin-right: 15px;
+    }
+    .banner {
+      padding: 30px 15px;
+    }
+    .livros, .resenhas {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .livro, .resenha {
+      margin: 0 15px 30px;
+    }
+  }
+  
+/*Tela dividia do computador*/
+@media only screen and (min-width: 767px) and (max-width: 1024px) {
+    header {
+        background-image: url('../imagens/fundo/fundo2.png');
+        padding: 20px;
+    }
+    nav ul li {
+        margin-right: 20px;
+    }
+    .banner {
+        padding: 40px 20px;
+    }
+    .livros, .resenhas {
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px; 
+    }
+    .livros h2 {
+        font-size: 30px;
+        grid-column: 1 / -1; 
+        justify-self: start; 
+        margin: 0; 
+        padding: 0; 
+    }
+    .livro, .resenha {
+        width: 75%;
+        box-sizing: border-box;
+        margin: 0px; 
+    }
+}

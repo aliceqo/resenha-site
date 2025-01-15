@@ -1,0 +1,19 @@
+const form = document.getElementById("resenhaForm");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault(); 
+
+  const formData = new FormData(form);
+  const xhr = new XMLHttpRequest();
+
+  xhr.open("POST", "adicionar", true); 
+  xhr.send(formData);
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      window.location.href = "paginaDeSucesso.html";
+    } else {
+      console.error("Error sending request:", xhr.statusText);
+    }
+  };
+});

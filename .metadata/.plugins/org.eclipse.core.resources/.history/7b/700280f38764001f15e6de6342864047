@@ -1,0 +1,103 @@
+package resenha;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import model.DAO;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+@WebServlet("/resenha")
+public class editarExcluirResenha extends HttpServlet {
+	 private static final long serialVersionUID = 1L;
+	 private DAO dao = new DAO();
+@Override
+	    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        String id = request.getParameter("id");
+	        if (id != null) {
+	            String query = "SELECT * FROM resenhas WHERE id = ?";
+	            try (Connection connection = dao.conectar();
+	                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+	                preparedStatement.setInt(1, Integer.parseInt(id));
+	                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+	                    if (resultSet.next()) {
+	                        response.setContentType("application/json");
+	                        PrintWriter out = response.getWriter();
+	                        out.print("{");
+	                        out.print("\"id\":\"" + resultSet.getInt("id") + "\",");
+	                        out.print("\"titulo\":\"" + resultSet.getString("titulo") + "\",");
+	                        out.print("\"autor\":\"" + resultSet.getString("autor") + "\",");
+	                        out.print("}");
+	                    } else {
+	                        response.sendError(HttpServletResponse.SC_NOT_FOUND, "Resenha não encontrada");
+	                    }
+	                }
+	            } catch (SQLException e) {
+	                throw new ServletException("Erro ao acessar o banco de dados", e);
+	            }
+	        } else {
+	            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID não fornecido");
+	        }
+	    }
+
+	    @Override
+	    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        String id = request.getParameter("id");
+	        String titulo = request.getParameter("titulo");
+	        String autor = request.getParameter("autor");
+
+	        if (id != null && titulo != null && autor != null) {
+	            String query = "UPDATE resenhas SET titulo = ?, autor = ? WHERE id = ?";
+	            try (Connection connection = dao.conectar();
+	                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+	                preparedStatement.setString(1, titulo);
+	                preparedStatement.setString(2, autor);
+	                preparedStatement.setInt(3, Integer.parseInt(id));
+	                int rowsUpdated = preparedStatement.executeUpdate();
+
+	                if (rowsUpdated > 0) {
+	                    response.setStatus(HttpServletResponse.SC_OK);
+	                    response.getWriter().print("Resenha atualizada com sucesso");
+	                } else {
+	                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "Resenha não encontrada");
+	                }
+	            } catch (SQLException e) {
+	                throw new ServletException("Erro ao acessar o banco de dados", e);
+	            }
+	        } else {
+	            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parâmetros insuficientes");
+	        }
+	    }
+
+	    @Override
+	    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        String id = request.getParameter("id");
+
+	        if (id != null) {
+	            String query = "DELETE FROM resenhas WHERE id = ?";
+	            try (Connection connection = dao.conectar();
+	                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+	                preparedStatement.setInt(1, Integer.parseInt(id));
+	                int rowsDeleted = preparedStatement.executeUpdate();
+
+	                if (rowsDeleted > 0) {
+	                    response.setStatus(HttpServletResponse.SC_OK);
+	                    response.getWriter().print("Resenha excluída com sucesso");
+	                } else {
+	                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "Resenha não encontrada");
+	                }
+	            } catch (SQLException e) {
+	                throw new ServletException("Erro ao acessar o banco de dados", e);
+	            }
+	        } else {
+	            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID não fornecido");
+	        }
+	    }
+	}

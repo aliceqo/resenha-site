@@ -1,0 +1,66 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const resenhaId = urlParams.get('id');
+
+    fetch(`/back-end/editarExcluir?id=${resenhaId}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('resenhaId').value = data.id;
+            document.getElementById('url_foto').value = data.urlFoto;
+            document.getElementById('titulo').value = data.titulo;
+            document.getElementById('idade_leitura').value = data.idadeLeitura;
+            document.getElementById('livro').value = data.livro;
+            document.getElementById('autor').value = data.autor;
+   			document.getElementById('tradutor').value = data.tradutor;
+    		document.getElementById('generos').value = data.generos;
+    		document.getElementById('idioma').value = data.idioma;
+    		document.getElementById('editora').value = data.editora;
+    		document.getElementById(numero_paginas).value = data.numeroPaginas;
+    		document.getElementById('frase_destaque').value = data.fraseDestaque;
+   			document.getElementById('conteudo_resenha').value = data.conteudoResenha;
+        })
+        .catch(error => console.error('Erro ao buscar resenha:', error));
+
+    document.getElementById('form-edit-resenha').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        const resenhaData = {
+            id: document.getElementById('resenhaId').value,
+            urlFoto: document.getElementById('url_foto').value,
+            titulo: document.getElementById('titulo').value,
+            idadeLeitura: document.getElementById('idade_leitura').value,
+            livro: document.getElementById('livro').value,
+            autor: document.getElementById('autor').value,
+            tradutor: document.getElementById('tradutor').value,
+            generos: document.getElementById('generos').value,
+            idioma: document.getElementById('idioma').value,
+            editora: document.getElementById('editora').value,
+            numeroPaginas: document.getElementById(numero_paginas).value,
+        };
+        
+    document.getElementById('resenha_frase').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        const fraseData = {
+            fraseDestaque: document.getElementById('frase_destaque').value,
+            conteudoResenha: document.getElementById('conteudo_resenha').value,
+        };
+
+        fetch('/EditarResenhaServlet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(resenhaData && fraseData) 
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Resenha atualizada com sucesso!');
+                window.location.href = '/resenhas.html';
+            } else {
+                throw new Error('Erro ao atualizar a resenha.');
+            }
+        })
+        .catch(error => console.error('Erro:', error));
+    });
+});
