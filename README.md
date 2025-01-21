@@ -7,8 +7,8 @@ Possuem funcionalidades exclusivas, como:
 - Acesso protegido por usuário e senha, com opção de recuperação de senha baseada no nome de usuário.
 
 ## Tecnologias Utilizadas:
-- Frontend: HTML, CSS e JavaScript.
-- Backend: Java.
+- Front-end: HTML, CSS e JavaScript.
+- Back-end: Java.
 - Banco de Dados: MySQL.
 - Ambiente de Desenvolvimento: Eclipse e Visual Studio Code.
 
